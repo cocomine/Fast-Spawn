@@ -1,0 +1,15 @@
+name: FastSpawn
+main: come.cocopixelmc.FastSpawn.main
+version: 2.0
+author: [cocomine]
+description: PVP Game
+softdepend: [TitleAPI, BossBarAPI, ActionBarAPI]
+commands:
+  fastspawn:
+    description: Plugin command
+  fs:
+    description: Plugin command
+permissions:
+  FastSpawn.admin:
+    description: admin command
+    default: op
