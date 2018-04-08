@@ -154,7 +154,7 @@ public class Spawn2 implements Listener{
     						String[] location = Location.split(",");
     						int x = Integer.parseInt(location[0]);
     						int y = Integer.parseInt(location[1]);
-    						int z = Integer.parseInt(location[2]);
+    						int z = Integer.parseInt(location[2]);//here
     						
     						Location location2 = new Location(world, x, y, z);
     						player.teleport(location2);
