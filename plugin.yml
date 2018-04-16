@@ -1,6 +1,6 @@
 name: FastSpawn
 main: come.cocopixelmc.FastSpawn.main
-version: 2.0
+version: 2.5
 author: [cocomine]
 description: PVP Game
 softdepend: [TitleAPI, BossBarAPI, ActionBarAPI]

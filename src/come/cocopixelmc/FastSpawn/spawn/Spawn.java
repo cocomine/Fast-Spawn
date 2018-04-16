@@ -16,6 +16,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
@@ -23,6 +25,7 @@ import com.cocopixelmc.playerdeath.API.Titles;
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import come.cocopixelmc.FastSpawn.main;
 import come.cocopixelmc.FastSpawn.team.Teams;
+import io.netty.util.internal.ThreadLocalRandom;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -181,14 +184,21 @@ public class Spawn implements Listener{
     					if(time == 0){//time up
     						
     						Team team = Teams.getPlayerInWhereArea().get(player);
-    								
+    						
     						String worldconfig = plugin.getConfig().getString("area."+team.getName()+".world");
     						World world = Bukkit.getServer().getWorld(worldconfig);
-    						String Location = plugin.getConfig().getString("area."+team.getName()+".Location");
-    						String[] location = Location.split(",");
-    						int x = Integer.parseInt(location[0]);
-    						int y = Integer.parseInt(location[1]);
-    						int z = Integer.parseInt(location[2]);
+    						
+    						String min = plugin.getConfig().getString("area."+team.getName()+".Location.Range.Min");
+    						String max = plugin.getConfig().getString("area."+team.getName()+".Location.Range.Max");
+    						String[] MIN = min.split(",");
+    						String[] MAX = max.split(",");
+    						
+    						int x = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[0]), Integer.valueOf(MAX[0]));
+    						int z = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[2]), Integer.valueOf(MAX[2]));
+    						int y = Integer.valueOf(MAX[1])-2;
+    						
+    						player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 5, 99));
+    						player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5, 99));
     						
     						Location location2 = new Location(world, x, y, z);
     						player.teleport(location2);

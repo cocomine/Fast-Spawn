@@ -10,12 +10,15 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import come.cocopixelmc.FastSpawn.main;
 import come.cocopixelmc.FastSpawn.spawn.Spawn;
 import come.cocopixelmc.FastSpawn.spawn.Spawn2;
+import io.netty.util.internal.ThreadLocalRandom;
 
 public class Teams implements Listener{
 	
@@ -53,14 +56,21 @@ public class Teams implements Listener{
 		
 		String worldconfig = plugin.getConfig().getString("area."+area+".world");
 		World world = Bukkit.getServer().getWorld(worldconfig);
-		String Location = plugin.getConfig().getString("area."+area+".Location");
-		String[] location = Location.split(",");
-		int x = Integer.parseInt(location[0]);
-		int y = Integer.parseInt(location[1]);
-		int z = Integer.parseInt(location[2]);
 		
-		Location location2 = new Location(world, x, y, z);
-		player.teleport(location2);
+		String min = plugin.getConfig().getString("area."+area+".Location.Range.Min");
+		String max = plugin.getConfig().getString("area."+area+".Location.Range.Max");
+		String[] MIN = min.split(",");
+		String[] MAX = max.split(",");
+		
+		int x = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[0]), Integer.valueOf(MAX[0]));
+		int z = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[2]), Integer.valueOf(MAX[2]));
+		int y = Integer.valueOf(MAX[1])-2;
+		
+		player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 5, 99));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5, 99));
+		
+		Location tp = new Location(world, x, y, z);
+		player.teleport(tp);
 		player.setGameMode(GameMode.SURVIVAL);
 		
 		Team team = board.getTeam(area);

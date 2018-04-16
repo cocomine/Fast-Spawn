@@ -66,9 +66,8 @@ public class Cmd implements Listener, CommandExecutor {
 						
 							plugin.getConfig().createSection("area."+args[1]);
 							plugin.getConfig().createSection("area."+args[1]+".world");
-							plugin.getConfig().createSection("area."+args[1]+".Location");
-							plugin.getConfig().createSection("area."+args[1]+".Range.Min");
-							plugin.getConfig().createSection("area."+args[1]+".Range.Max");
+							plugin.getConfig().createSection("area."+args[1]+".Location.Range.Min");
+							plugin.getConfig().createSection("area."+args[1]+".Location.Range.Max");
 							
 							plugin.saveConfig();
 							plugin.reloadConfig();
@@ -131,31 +130,6 @@ public class Cmd implements Listener, CommandExecutor {
 				if(args[0].equalsIgnoreCase("set")){
 					if(player.hasPermission("FastSpawn.admin")){
 						if(args.length >= 2){
-							
-							if(args[1].equalsIgnoreCase("spawn")){
-								if(args.length >= 3){
-									if(plugin.getConfig().getConfigurationSection("area").contains(args[2])){
-									
-										String world = player.getWorld().getName();
-										int x = (int) player.getLocation().getX();
-										int y = (int) player.getLocation().getY();
-										int z = (int) player.getLocation().getZ();
-								
-										plugin.getConfig().set("area."+ args[2] +".world", world);
-										String Location = x+","+y+","+z;
-										plugin.getConfig().set("area."+args[2]+".Location", Location);
-								
-										plugin.saveConfig();
-										plugin.reloadConfig();
-								
-										player.sendMessage(ChatColor.GREEN + "Spawn is save");
-									}else{
-										player.sendMessage(ChatColor.RED + "場地不存在");
-									}
-								}else{
-									player.sendMessage(ChatColor.RED + "請輸入名稱");
-								}
-							}else
 								
 							if(args[1].equalsIgnoreCase("Range")){
 								if(args.length >= 3){
@@ -188,9 +162,9 @@ public class Cmd implements Listener, CommandExecutor {
 													Min.getBlockZ());
 										}
 										
-										plugin.getConfig().set("area."+args[2]+".Range.Min", min);
-										plugin.getConfig().set("area."+args[2]+".Range.Max", max);
-									
+										plugin.getConfig().set("area."+args[2]+".Location.Range.Min", min);
+										plugin.getConfig().set("area."+args[2]+".Location.Range.Max", max);
+										
 										plugin.saveConfig();
 										plugin.reloadConfig();
 									
