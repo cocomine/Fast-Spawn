@@ -5,6 +5,7 @@
 	<classpathentry kind="lib" path="D:/minecraft JDK/1.8 plugins/ActionBarAPI-1.5.3.jar"/>
 	<classpathentry kind="lib" path="D:/minecraft JDK/1.8 plugins/BossBarAPI_v2.4.1.jar"/>
 	<classpathentry kind="lib" path="D:/minecraft JDK/1.8 plugins/spigot-1.8.8.jar"/>
-	<classpathentry kind="lib" path="D:/minecraft JDK/1.8 plugins/TitleAPI-1.7.5.jar"/>
+	<classpathentry kind="lib" path="D:/app/server/test/plugins/Worldedit-6.1.3.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Player Death2"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

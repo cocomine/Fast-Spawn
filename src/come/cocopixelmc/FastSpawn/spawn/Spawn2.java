@@ -17,9 +17,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
+import com.cocopixelmc.playerdeath.API.Titles;
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
-import com.connorlinfoot.titleapi.TitleAPI;
-
 import come.cocopixelmc.FastSpawn.main;
 import come.cocopixelmc.FastSpawn.team.Teams;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -44,7 +43,6 @@ public class Spawn2 implements Listener{
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.LOW)
     //Death
     public void onEntityDeath(EntityDamageEvent e){
@@ -64,7 +62,7 @@ public class Spawn2 implements Listener{
     			player.setGameMode(GameMode.SPECTATOR);//SPECTATOR
     			String Title = ChatColor.RED + ChatColor.BOLD.toString() + "你已死亡";
     			String SubTitle = ChatColor.YELLOW + "即將於 " + ChatColor.RED + "5" + ChatColor.YELLOW + " 秒後重生!";
-    			TitleAPI.sendFullTitle(player, 10, 40, 10, Title, SubTitle);
+    			Titles.sendFulltitle(player, Title, SubTitle, 10, 40, 10);
     			player.setHealth(20);
     			
     			player.sendMessage(ChatColor.GREEN + "/fastspawn quit <-- 離開場地");

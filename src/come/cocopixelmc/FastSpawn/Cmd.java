@@ -1,11 +1,16 @@
 package come.cocopixelmc.FastSpawn;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.bukkit.selections.Selection;
 
 import come.cocopixelmc.FastSpawn.team.Teams;
 
@@ -62,7 +67,9 @@ public class Cmd implements Listener, CommandExecutor {
 							plugin.getConfig().createSection("area."+args[1]);
 							plugin.getConfig().createSection("area."+args[1]+".world");
 							plugin.getConfig().createSection("area."+args[1]+".Location");
-						
+							plugin.getConfig().createSection("area."+args[1]+".Range.Min");
+							plugin.getConfig().createSection("area."+args[1]+".Range.Max");
+							
 							plugin.saveConfig();
 							plugin.reloadConfig();
 						
@@ -141,6 +148,52 @@ public class Cmd implements Listener, CommandExecutor {
 										plugin.saveConfig();
 										plugin.reloadConfig();
 								
+										player.sendMessage(ChatColor.GREEN + "Spawn is save");
+									}else{
+										player.sendMessage(ChatColor.RED + "場地不存在");
+									}
+								}else{
+									player.sendMessage(ChatColor.RED + "請輸入名稱");
+								}
+							}else
+								
+							if(args[1].equalsIgnoreCase("Range")){
+								if(args.length >= 3){
+									if(plugin.getConfig().getConfigurationSection("area").contains(args[2])){
+										
+										WorldEditPlugin worldEdit = (WorldEditPlugin)Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
+										Selection selection = worldEdit.getSelection(player);
+										Location Max = selection.getMaximumPoint();
+										Location Min = selection.getMinimumPoint();
+										
+										String max;
+										String min;
+										if(Min.getBlockY() >= Max.getBlockY()){
+											max = String.format("%d,%d,%d", 
+													Min.getBlockX(),
+													Min.getBlockY(),
+													Min.getBlockZ());
+											min = String.format("%d,%d,%d", 
+													Max.getBlockX(),
+													Max.getBlockY(),
+													Max.getBlockZ());
+										}else{
+											max = String.format("%d,%d,%d", 
+													Max.getBlockX(),
+													Max.getBlockY(),
+													Max.getBlockZ());
+											min = String.format("%d,%d,%d", 
+													Min.getBlockX(),
+													Min.getBlockY(),
+													Min.getBlockZ());
+										}
+										
+										plugin.getConfig().set("area."+args[2]+".Range.Min", min);
+										plugin.getConfig().set("area."+args[2]+".Range.Max", max);
+									
+										plugin.saveConfig();
+										plugin.reloadConfig();
+									
 										player.sendMessage(ChatColor.GREEN + "Spawn is save");
 									}else{
 										player.sendMessage(ChatColor.RED + "場地不存在");
