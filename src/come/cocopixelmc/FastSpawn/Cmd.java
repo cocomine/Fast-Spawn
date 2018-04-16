@@ -164,11 +164,12 @@ public class Cmd implements Listener, CommandExecutor {
 										
 										plugin.getConfig().set("area."+args[2]+".Location.Range.Min", min);
 										plugin.getConfig().set("area."+args[2]+".Location.Range.Max", max);
+										plugin.getConfig().set("area."+args[2]+".world", selection.getWorld().getName());
 										
 										plugin.saveConfig();
 										plugin.reloadConfig();
 									
-										player.sendMessage(ChatColor.GREEN + "Spawn is save");
+										player.sendMessage(ChatColor.GREEN + "Range is save");
 									}else{
 										player.sendMessage(ChatColor.RED + "場地不存在");
 									}
@@ -194,14 +195,14 @@ public class Cmd implements Listener, CommandExecutor {
 								player.sendMessage(ChatColor.GREEN + "lobby is save");
 								
 							}else{
-								player.sendMessage(ChatColor.RED + "/fs set spawn <AreaName>   -->  set game spawn");
+								player.sendMessage(ChatColor.RED + "/fs set Range <AreaName>   -->  set game Range");
 								player.sendMessage(ChatColor.RED + "/fs set lobby   -->  set game lobby");
 								player.sendMessage(ChatColor.RED + "/fs remove <AreaName>  -->  remove Area");
 								player.sendMessage(ChatColor.RED + "/fs list   -->  list Area");
 							}
 							
 						}else{
-							player.sendMessage(ChatColor.RED + "/fs set spawn <AreaName>   -->  set game spawn");
+							player.sendMessage(ChatColor.RED + "/fs set Range <AreaName>   -->  set game Range");
 							player.sendMessage(ChatColor.RED + "/fs set lobby   -->  set game lobby");
 							player.sendMessage(ChatColor.RED + "/fs remove <AreaName>  -->  remove Area");
 							player.sendMessage(ChatColor.RED + "/fs list   -->  list Area");

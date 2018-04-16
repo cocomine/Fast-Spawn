@@ -66,8 +66,8 @@ public class Teams implements Listener{
 		int z = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[2]), Integer.valueOf(MAX[2]));
 		int y = Integer.valueOf(MAX[1])-2;
 		
-		player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 5, 99));
-		player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5, 99));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.getById(11), 5*20, 99));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5*20, 99));
 		
 		Location tp = new Location(world, x, y, z);
 		player.teleport(tp);

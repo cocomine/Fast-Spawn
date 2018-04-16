@@ -18,14 +18,6 @@ public class main extends JavaPlugin implements Listener{
 		
 		getLogger().info("Loading...");//load
 		
-		//TitleAPI
-		if (Bukkit.getPluginManager().isPluginEnabled("TitleAPI")){
-			Bukkit.getPluginManager().registerEvents(this, this);
-		} else {
-			Load.NoneTitleAPI();
-			throw new RuntimeException("TitleAPI is not find!! ");
-		}
-		
 		//BarAPI
 		if (Bukkit.getPluginManager().isPluginEnabled("BossBarAPI")){
 			Bukkit.getPluginManager().registerEvents(this, this);
