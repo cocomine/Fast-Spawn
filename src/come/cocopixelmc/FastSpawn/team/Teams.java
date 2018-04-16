@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -70,15 +71,19 @@ public class Teams implements Listener{
 		player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5*20, 99));
 		
 		Location tp = new Location(world, x, y, z);
-		player.teleport(tp);
-		player.setGameMode(GameMode.SURVIVAL);
 		
-		Team team = board.getTeam(area);
-		PlayerInWhereArea.put(player, team);
-		team.addPlayer(player);
-		player.playSound(player.getLocation(), Sound.CLICK, 2F, 15F);
-		player.sendMessage(ChatColor.BLUE + "你加入了遊戲");
+		if(tp.getBlock().getType().equals(Material.AIR)){
+			player.teleport(tp);
+			player.setGameMode(GameMode.SURVIVAL);
 		
+			Team team = board.getTeam(area);
+			PlayerInWhereArea.put(player, team);
+			team.addPlayer(player);
+			player.playSound(player.getLocation(), Sound.CLICK, 2F, 15F);
+			player.sendMessage(ChatColor.BLUE + "你加入了遊戲");
+		}else{
+			JoinTeam(player, area);
+		}
 	}
 	
 	@SuppressWarnings("deprecation")

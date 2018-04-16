@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -119,8 +120,7 @@ public class Spawn2 implements Listener{
     				
     				int time = 5;
 					
-    				@SuppressWarnings("deprecation")
-					@Override
+    				@Override
     			    public void run() 
     			    {
     					
@@ -148,31 +148,7 @@ public class Spawn2 implements Listener{
     					}
     					if(time == 0){//time up
     						
-    						Team team = Teams.getPlayerInWhereArea().get(player);
-    						
-    						String worldconfig = plugin.getConfig().getString("area."+team.getName()+".world");
-    						World world = Bukkit.getServer().getWorld(worldconfig);
-    						
-    						String min = plugin.getConfig().getString("area."+team.getName()+".Location.Range.Min");
-    						String max = plugin.getConfig().getString("area."+team.getName()+".Location.Range.Max");
-    						String[] MIN = min.split(",");
-    						String[] MAX = max.split(",");
-    						
-    						int x = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[0]), Integer.valueOf(MAX[0]));
-    						int z = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[2]), Integer.valueOf(MAX[2]));
-    						int y = Integer.valueOf(MAX[1])-2;
-    						
-    						player.addPotionEffect(new PotionEffect(PotionEffectType.getById(11), 5*20, 99));
-    						player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5*20, 99));
-    						
-    						Location location2 = new Location(world, x, y, z);
-    						player.teleport(location2);
-    						player.setGameMode(GameMode.SURVIVAL);
-    						ActionBarAPI.sendActionBar(player,ChatColor.YELLOW + "重生!!");
-    						player.playSound(player.getLocation(), Sound.LEVEL_UP, 2F, 15F);
-    						
-    						
-    						Deathquest.remove(player.getName());
+    						respawn(player);
     						cancel();
     					}
     					
@@ -183,4 +159,40 @@ public class Spawn2 implements Listener{
     		}
     	}
 	}
+	
+	@SuppressWarnings("deprecation")
+	public void respawn(Player player){
+		
+		Team team = Teams.getPlayerInWhereArea().get(player);
+		
+		String worldconfig = plugin.getConfig().getString("area."+team.getName()+".world");
+		World world = Bukkit.getServer().getWorld(worldconfig);
+		
+		String min = plugin.getConfig().getString("area."+team.getName()+".Location.Range.Min");
+		String max = plugin.getConfig().getString("area."+team.getName()+".Location.Range.Max");
+		String[] MIN = min.split(",");
+		String[] MAX = max.split(",");
+		
+		int x = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[0]), Integer.valueOf(MAX[0]));
+		int z = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[2]), Integer.valueOf(MAX[2]));
+		int y = Integer.valueOf(MAX[1])-2;
+		
+		player.addPotionEffect(new PotionEffect(PotionEffectType.getById(11), 5*20, 99));
+		player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5*20, 99));
+		
+		Location location2 = new Location(world, x, y, z);
+		
+		if(location2.getBlock().getType().equals(Material.AIR)){
+			player.teleport(location2);
+			player.setGameMode(GameMode.SURVIVAL);
+			ActionBarAPI.sendActionBar(player,ChatColor.YELLOW + "重生!!");
+			player.playSound(player.getLocation(), Sound.LEVEL_UP, 2F, 15F);
+		
+			Deathquest.remove(player.getName());
+		}else{
+			respawn(player);
+		}
+		
+	}
+	
 }
