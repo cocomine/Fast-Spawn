@@ -209,8 +209,18 @@ public class Spawn implements Listener{
 		String[] MIN = min.split(",");
 		String[] MAX = max.split(",");
 		
-		int x = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[0]), Integer.valueOf(MAX[0]));
-		int z = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[2]), Integer.valueOf(MAX[2]));
+		int x;
+		int z;
+		if(Integer.valueOf(MIN[0]) > Integer.valueOf(MAX[0])){
+			x = ThreadLocalRandom.current().nextInt(Integer.valueOf(MAX[0]), Integer.valueOf(MIN[0]));
+		}else{
+			x = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[0]), Integer.valueOf(MAX[0]));
+		}
+		if(Integer.valueOf(MIN[2]) > Integer.valueOf(MAX[2])){
+			z = ThreadLocalRandom.current().nextInt(Integer.valueOf(MAX[2]), Integer.valueOf(MIN[2]));
+		}else{
+			z = ThreadLocalRandom.current().nextInt(Integer.valueOf(MIN[2]), Integer.valueOf(MAX[2]));
+		}
 		int y = Integer.valueOf(MAX[1])-2;
 		
 		player.addPotionEffect(new PotionEffect(PotionEffectType.getById(11), 5*20, 99));
